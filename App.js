@@ -1,12 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import OnBoarding from './screens/OnBoarding';
+import {useFonts} from "expo-font"
 
 export default function App() {
+
+  const [fontsLoaded] = useFonts({
+    "Karla" : require('./assets/fonts/Karla-Regular.ttf'),
+    "MarkaziText" : require('./assets/fonts/MarkaziText-Regular.ttf'),
+  })
+
+  if (!fontsLoaded){
+    return null;
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <OnBoarding/>
   );
 }
 

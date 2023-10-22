@@ -1,5 +1,4 @@
 import { View, StyleSheet, Text, TextInput, Pressable } from "react-native"
-import Header from "../components/Header"
 
 const OnBoarding = () => {
 
@@ -9,7 +8,6 @@ const OnBoarding = () => {
     
     return(
         <View style={OnBoardingStyle.container}>
-            <Header/>
             <View style={OnBoardingStyle.InputArea}>
                 <View>
                     <Text style={{color: "#EDEFEE", fontSize: 14, fontFamily: "Karla"}}>Welcome from</Text>

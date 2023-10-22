@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Image, View } from 'react-native';
 import OnBoarding from './screens/OnBoarding';
 import {useFonts} from "expo-font"
 import {NavigationContainer} from "@react-navigation/native"
@@ -17,9 +17,20 @@ export default function App() {
     return null;
   }
 
+  const Header = () => (
+    <View style={styles.headerContainer}>
+      <Image source={require("./assets/Logo.png")} />
+      <Image source={require("./assets/Profile.png")} style={styles.profilePic} />
+    </View>
+  )
+
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerTitle: (props) => <Header/>
+        }}
+      >
         <Stack.Screen name="Onboarding" component={OnBoarding}/>
       </Stack.Navigator>
     </NavigationContainer>
@@ -33,4 +44,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  headerContainer: {
+    position: "relative",
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    top: -8,
+    left: -20
+  },
+  profilePic: {
+    width: 40,
+    height: 40,
+    position: "absolute",
+    right: 20
+  },
+  logoPic:{
+
+  }
 });

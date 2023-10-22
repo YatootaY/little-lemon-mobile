@@ -1,8 +1,9 @@
 import { StyleSheet, Image, View } from 'react-native';
-import OnBoarding from './screens/OnBoarding';
+import OnBoardingScreen from './screens/OnBoardingScreen';
 import {useFonts} from "expo-font"
 import {NavigationContainer} from "@react-navigation/native"
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import ProfileScreen from './screens/ProfileScreen';
 
 const Stack = createNativeStackNavigator()
 
@@ -31,7 +32,8 @@ export default function App() {
           headerTitle: (props) => <Header/>
         }}
       >
-        <Stack.Screen name="Onboarding" component={OnBoarding}/>
+        {/* <Stack.Screen name="Onboarding" component={OnBoardingScreen}/> */}
+        <Stack.Screen name="Profile" component={ProfileScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -50,12 +52,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    top: -8,
-    left: -20
+    top: -2,
+    left: -20,
   },
   profilePic: {
-    width: 40,
-    height: 40,
+    width: 35,
+    height: 35,
     position: "absolute",
     right: 20
   },

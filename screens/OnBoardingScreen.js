@@ -1,6 +1,6 @@
 import { View, StyleSheet, Text, TextInput, Pressable } from "react-native"
 
-const OnBoarding = () => {
+const OnBoardingScreen = () => {
 
     const onNextHandle = () => {
         console.log("Clicked Next")
@@ -78,4 +78,4 @@ const OnBoardingStyle = StyleSheet.create({
 
 })
 
-export default OnBoarding
+export default OnBoardingScreen

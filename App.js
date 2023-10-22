@@ -1,4 +1,4 @@
-import { StyleSheet, Image, View, Text } from 'react-native';
+import { StyleSheet, Image, View, Text, Pressable } from 'react-native';
 import OnBoardingScreen from './screens/OnBoardingScreen';
 import {useFonts} from "expo-font"
 import {NavigationContainer} from "@react-navigation/native"
@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProfileScreen from './screens/ProfileScreen';
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import MainScreen from './screens/MainScreen';
 
 const Stack = createNativeStackNavigator()
 
@@ -18,13 +19,6 @@ const App = () => {
     "Karla" : require('./assets/fonts/Karla-Regular.ttf'),
     "MarkaziText" : require('./assets/fonts/MarkaziText-Regular.ttf'),
   })
-
-  const Header = () => (
-    <View style={styles.headerContainer}>
-      <Image source={require("./assets/Logo.png")} />
-      <Image source={require("./assets/Profile.png")} style={styles.profilePic} />
-    </View>
-  )
 
   useEffect(()=> {
     (async() => {
@@ -57,11 +51,42 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
-          headerTitle: (props) => <Header/>
+          headerTitle: (props) => <Image style={{top: -1}} source={require("./assets/Logo.png")} />
         }}
       >
+        <Stack.Screen 
+            name="Main" 
+            component={MainScreen}
+            navigattionOpition={
+              {headerLeft: () => null}
+            }
+            options={({navigation}) => ({
+              headerRight: () => (
+                <Pressable 
+                  onPress={() => navigation.navigate("Profile")}
+                >
+                  <Image style={{width: 28, height: 28}} source={require("./assets/Profile.png")}/>
+                </Pressable>
+              ),
+              headerLeft: () => (
+                <Text></Text>
+              )
+            })}
+          />
         {isOnBoard ? 
-          <Stack.Screen name="Profile" component={ProfileScreen}/> :
+          <Stack.Screen 
+            name="Profile" 
+            component={ProfileScreen}
+            options={({navigation}) => ({
+              headerLeft: () => (
+                <Pressable 
+                  onPress={() => navigation.navigate("Main")}
+                >
+                  <Text>Back</Text>
+                </Pressable>
+              )
+            })}
+          /> :
           <Stack.Screen name="Onboarding" initialParams={{setIsOnBoard: setIsOnBoard}} component={OnBoardingScreen}/>
         }
       </Stack.Navigator>

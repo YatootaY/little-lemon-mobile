@@ -30,9 +30,10 @@ const App = () => {
     (async() => {
         try{
             setIsLoading(true)
-            const value = await AsyncStorage.getItem("email")
-            if (value !== null){
-                setIsOnBoard(true)
+            const email = await AsyncStorage.getItem("email")
+            const name = await AsyncStorage.getItem("name")
+            if (email !== null && name !== null){
+              setIsOnBoard(true)
             }
         }catch(error){
             console.log(error)
@@ -40,8 +41,9 @@ const App = () => {
           setIsLoading(false)
         }
     })()
-  },[])
+  },[isOnBoard])
 
+  
   if (isLoading && !fontsLoaded){
     return(
       <View>
@@ -49,6 +51,7 @@ const App = () => {
       </View>
     )
   }
+
 
   return (
     <NavigationContainer>
@@ -59,7 +62,7 @@ const App = () => {
       >
         {isOnBoard ? 
           <Stack.Screen name="Profile" component={ProfileScreen}/> :
-          <Stack.Screen name="Onboarding" component={OnBoardingScreen}/>
+          <Stack.Screen name="Onboarding" initialParams={{setIsOnBoard: setIsOnBoard}} component={OnBoardingScreen}/>
         }
       </Stack.Navigator>
     </NavigationContainer>

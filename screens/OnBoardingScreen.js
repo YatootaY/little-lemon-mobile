@@ -2,18 +2,20 @@ import { useEffect, useState } from "react"
 import { View, StyleSheet, Text, TextInput, Pressable } from "react-native"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const OnBoardingScreen = ({navigation}) => {
+const OnBoardingScreen = ({navigation, route}) => {
 
+    const {setIsOnBoard} = route.params
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
-    const [isOnBoard, setIsOnBoard] = useState(false)
 
     const onNextHandle = () => {
+        console.log(setIsOnBoard)
         let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
         if (reg.test(email) && name){
             (async() => {
                 try{
                     await AsyncStorage.setItem("email", email)
+                    await AsyncStorage.setItem("name",name)
                     setIsOnBoard(true)
                 } catch( error){
                     console.log(error)
@@ -21,25 +23,6 @@ const OnBoardingScreen = ({navigation}) => {
             })();
         }
     }
-
-    useEffect(()=> {
-        (async() => {
-            try{
-                const value = await AsyncStorage.getItem("email")
-                if (value !== null){
-                    setIsOnBoard(true)
-                }
-            }catch(error){
-                console.log(error)
-            }
-        })()
-    },[])
-
-    useEffect(()=>{
-        if (isOnBoard){
-            navigation.navigate("Profile")
-        }
-    },[isOnBoard])
 
     return(
         <View style={OnBoardingStyle.container}>

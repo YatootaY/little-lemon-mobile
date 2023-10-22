@@ -2,6 +2,10 @@ import { View, StyleSheet, Text, TextInput, Pressable } from "react-native"
 import Header from "../components/Header"
 
 const OnBoarding = () => {
+
+    const onNextHandle = () => {
+        console.log("Clicked Next")
+    }
     
     return(
         <View style={OnBoardingStyle.container}>
@@ -27,7 +31,7 @@ const OnBoarding = () => {
                     </View>
                 </View>
                 <View style={OnBoardingStyle.ButtonContainer}>
-                    <Pressable style={OnBoardingStyle.Button}>
+                    <Pressable style={OnBoardingStyle.Button} onPress={onNextHandle}>
                         <Text style={{textAlign:"center"}}>Next</Text>
                     </Pressable>
                 </View>

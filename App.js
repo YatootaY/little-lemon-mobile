@@ -1,22 +1,23 @@
-import { StyleSheet, Image, View } from 'react-native';
+import { StyleSheet, Image, View, Text } from 'react-native';
 import OnBoardingScreen from './screens/OnBoardingScreen';
 import {useFonts} from "expo-font"
 import {NavigationContainer} from "@react-navigation/native"
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProfileScreen from './screens/ProfileScreen';
+import { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator()
 
-export default function App() {
+const App = () => {
+
+  const [isOnBoard, setIsOnBoard] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   const [fontsLoaded] = useFonts({
     "Karla" : require('./assets/fonts/Karla-Regular.ttf'),
     "MarkaziText" : require('./assets/fonts/MarkaziText-Regular.ttf'),
   })
-
-  if (!fontsLoaded){
-    return null;
-  }
 
   const Header = () => (
     <View style={styles.headerContainer}>
@@ -25,6 +26,30 @@ export default function App() {
     </View>
   )
 
+  useEffect(()=> {
+    (async() => {
+        try{
+            setIsLoading(true)
+            const value = await AsyncStorage.getItem("email")
+            if (value !== null){
+                setIsOnBoard(true)
+            }
+        }catch(error){
+            console.log(error)
+        } finally {
+          setIsLoading(false)
+        }
+    })()
+  },[])
+
+  if (isLoading && !fontsLoaded){
+    return(
+      <View>
+        <Text>Loading</Text>
+      </View>
+    )
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -32,8 +57,10 @@ export default function App() {
           headerTitle: (props) => <Header/>
         }}
       >
-        {/* <Stack.Screen name="Onboarding" component={OnBoardingScreen}/> */}
-        <Stack.Screen name="Profile" component={ProfileScreen}/>
+        {isOnBoard ? 
+          <Stack.Screen name="Profile" component={ProfileScreen}/> :
+          <Stack.Screen name="Onboarding" component={OnBoardingScreen}/>
+        }
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -65,3 +92,5 @@ const styles = StyleSheet.create({
 
   }
 });
+
+export default App

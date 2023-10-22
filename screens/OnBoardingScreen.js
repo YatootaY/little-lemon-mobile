@@ -1,11 +1,46 @@
+import { useEffect, useState } from "react"
 import { View, StyleSheet, Text, TextInput, Pressable } from "react-native"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const OnBoardingScreen = () => {
+const OnBoardingScreen = ({navigation}) => {
+
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [isOnBoard, setIsOnBoard] = useState(false)
 
     const onNextHandle = () => {
-        console.log("Clicked Next")
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+        if (reg.test(email) && name){
+            (async() => {
+                try{
+                    await AsyncStorage.setItem("email", email)
+                    setIsOnBoard(true)
+                } catch( error){
+                    console.log(error)
+                }
+            })();
+        }
     }
-    
+
+    useEffect(()=> {
+        (async() => {
+            try{
+                const value = await AsyncStorage.getItem("email")
+                if (value !== null){
+                    setIsOnBoard(true)
+                }
+            }catch(error){
+                console.log(error)
+            }
+        })()
+    },[])
+
+    useEffect(()=>{
+        if (isOnBoard){
+            navigation.navigate("Profile")
+        }
+    },[isOnBoard])
+
     return(
         <View style={OnBoardingStyle.container}>
             <View style={OnBoardingStyle.InputArea}>
@@ -19,12 +54,16 @@ const OnBoardingScreen = () => {
                         <Text style={OnBoardingStyle.InputLabel}>First Name</Text>
                         <TextInput
                             style={OnBoardingStyle.InputField}
+                            onChangeText={setName}
+                            value={name}
                         />
                     </View>
                     <View>
                         <Text style={OnBoardingStyle.InputLabel}>Email</Text>
                         <TextInput
                             style={OnBoardingStyle.InputField}
+                            onChangeText={setEmail}
+                            value={email}
                         />
                     </View>
                 </View>

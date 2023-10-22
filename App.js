@@ -65,7 +65,7 @@ const App = () => {
                 <Pressable 
                   onPress={() => navigation.navigate("Profile")}
                 >
-                  <Image style={{width: 28, height: 28}} source={require("./assets/Profile.png")}/>
+                  <Image style={{width: 30, height: 30}} source={require("./assets/Profile.png")}/>
                 </Pressable>
               ),
               headerLeft: () => (
@@ -77,15 +77,10 @@ const App = () => {
           <Stack.Screen 
             name="Profile" 
             component={ProfileScreen}
-            options={({navigation}) => ({
-              headerLeft: () => (
-                <Pressable 
-                  onPress={() => navigation.navigate("Main")}
-                >
-                  <Text>Back</Text>
-                </Pressable>
-              )
-            })}
+            options={{
+              headerBackTitle: "Menu",
+              headerBackTitleStyle: {fontSize: 16}
+            }}
           /> :
           <Stack.Screen name="Onboarding" initialParams={{setIsOnBoard: setIsOnBoard}} component={OnBoardingScreen}/>
         }

@@ -17,6 +17,7 @@ const OnBoardingScreen = ({navigation, route}) => {
                     await AsyncStorage.setItem("email", email)
                     await AsyncStorage.setItem("name",name)
                     setIsOnBoard(true)
+                    navigation.navigate("Onboarding")
                 } catch( error){
                     console.log(error)
                 }

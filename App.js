@@ -77,12 +77,22 @@ const App = () => {
           <Stack.Screen 
             name="Profile" 
             component={ProfileScreen}
+            initialParams={{setIsOnBoard: setIsOnBoard}}
             options={{
               headerBackTitle: "Menu",
               headerBackTitleStyle: {fontSize: 16}
             }}
           /> :
-          <Stack.Screen name="Onboarding" initialParams={{setIsOnBoard: setIsOnBoard}} component={OnBoardingScreen}/>
+          <Stack.Screen 
+          name="Onboarding" 
+          options={({navigation}) => ({
+            headerLeft: () => (
+              <Text></Text>
+            )
+          })}
+          initialParams={{setIsOnBoard: setIsOnBoard}} 
+          component={OnBoardingScreen}
+          />
         }
       </Stack.Navigator>
     </NavigationContainer>

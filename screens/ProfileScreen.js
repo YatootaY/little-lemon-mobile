@@ -64,7 +64,7 @@ const ProfileScreen = ({navigation, route}) => {
 
 
     const handleDiscard = () => {
-        navigation.navigate("Main")
+        navigation.navigate("Home")
     }
 
     const handleSaveChanges = async () => {
@@ -76,11 +76,12 @@ const ProfileScreen = ({navigation, route}) => {
         await AsyncStorage.setItem("passwordNoti", passwordNoti.toString());
         await AsyncStorage.setItem("specialNoti", specialNoti.toString());
         await AsyncStorage.setItem("newsNoti", newsNoti.toString());
-        navigation.navigate("Main")
+        navigation.navigate("Home")
     }
 
     const handleLogout = async () => {
         await AsyncStorage.clear()
+        console.log(setIsOnBoard)
         setIsOnBoard(false)
         navigation.navigate("Onboarding")
     }

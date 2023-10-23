@@ -38,7 +38,7 @@ const App = () => {
   },[isOnBoard])
 
   
-  if (isLoading && !fontsLoaded){
+  if (isLoading || !fontsLoaded){
     return(
       <View>
         <Text>Loading</Text>
@@ -55,7 +55,7 @@ const App = () => {
         }}
       >
         <Stack.Screen 
-            name="Main" 
+            name="Home" 
             component={MainScreen}
             navigattionOpition={
               {headerLeft: () => null}
@@ -79,7 +79,7 @@ const App = () => {
             component={ProfileScreen}
             initialParams={{setIsOnBoard: setIsOnBoard}}
             options={{
-              headerBackTitle: "Menu",
+              headerBackTitle: "Home",
               headerBackTitleStyle: {fontSize: 16}
             }}
           /> :

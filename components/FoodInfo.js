@@ -1,12 +1,15 @@
+import { useEffect, useState } from "react"
 import { View, Image, Text } from "react-native"
 
+const imageMapping = {
+    "greekSalad.jpg": require('../assets/greekSalad.jpg'),
+    "bruschetta.jpg": require('../assets/bruschetta.jpg'),
+    "grilledFish.jpg": require('../assets/grilledFish.jpg'),
+    "pasta.jpg": require('../assets/pasta.jpg'),
+    "lemonDessert.jpg": require('../assets/lemonDessert.jpg'),
+}
 
-const FoodInfo = () => {
-
-    const name = "Greek Salad"
-    const price = 12.99
-    const description = "Our delicious salad is served with Feta cheese and peeled cucumber. Includes tomatoes, onions, olives, salt and oregano in the ingredients."
-    const image = "lemonDessert.jpg"
+const FoodInfo = ({name, price, description, image}) => {
 
     return(
         <View style={{flexDirection: "row", justifyContent: "space-between", borderBottomWidth: 1, borderColor: "#ACACAC", paddingVertical: 20, alignItems: "center"}}>
@@ -16,7 +19,7 @@ const FoodInfo = () => {
                 <Text style={{fontWeight: "bold", fontSize: 12, color: "#333333"}}>${price}</Text>
             </View>
             <Image 
-                source={require(`../assets/${image}`)}
+                source={imageMapping[image]}
                 style={{width: 80, height: 80}}
             />
         </View>

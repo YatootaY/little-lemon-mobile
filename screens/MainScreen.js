@@ -6,6 +6,7 @@ import FoodInfo from "../components/FoodInfo"
 import { createTable, filterByQueryAndCategories, getMenuItems, saveMenuItems } from "../database"
 import { getSectionListData, useUpdateEffect } from "../utils"
 import debounce from 'lodash.debounce';
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const sections = ["starters", "mains", "desserts", "drinks"]
 const API_URL = "https://raw.githubusercontent.com/Meta-Mobile-Developer-PC/Working-With-Data-API/main/capstone.json"
@@ -84,6 +85,15 @@ const MainScreen = ({navigation}) => {
             }
         })()
     }, [])
+
+    useEffect(()=>{
+        (async () => {
+            const email = await AsyncStorage.getItem("email")
+            if (!email){
+                navigation.navigate("Onboarding")
+            }
+        })()
+    },[])
 
     return(
         <View style={{flex:1, paddingBottom: 10}}>

@@ -81,6 +81,7 @@ const ProfileScreen = ({navigation, route}) => {
 
     const handleLogout = async () => {
         await AsyncStorage.clear()
+        console.log(setIsOnBoard)
         setIsOnBoard(false)
         navigation.navigate("Onboarding")
     }

@@ -67,6 +67,18 @@ const ProfileScreen = ({navigation, route}) => {
         navigation.navigate("Main")
     }
 
+    const handleSaveChanges = async () => {
+        await AsyncStorage.setItem("email",email)
+        await AsyncStorage.setItem("name", firstName)
+        await AsyncStorage.setItem("lastName", lastName)
+        await AsyncStorage.setItem("phoneNumber", phoneNumber);
+        await AsyncStorage.setItem("orderNoti", orderNoti.toString());
+        await AsyncStorage.setItem("passwordNoti", passwordNoti.toString());
+        await AsyncStorage.setItem("specialNoti", specialNoti.toString());
+        await AsyncStorage.setItem("newsNoti", newsNoti.toString());
+        navigation.navigate("Main")
+    }
+
     const handleLogout = async () => {
         await AsyncStorage.clear()
         setIsOnBoard(false)
@@ -107,6 +119,7 @@ const ProfileScreen = ({navigation, route}) => {
                     <TextInput
                         style={styles.InputField}
                         value={firstName}
+                        onChangeText={setFirstName}
                     />
                 </View>
                 <View>
@@ -114,6 +127,7 @@ const ProfileScreen = ({navigation, route}) => {
                     <TextInput
                         style={styles.InputField}
                         value={lastName}
+                        onChangeText={setLastName}
                     />
                 </View>
                 <View>
@@ -121,6 +135,8 @@ const ProfileScreen = ({navigation, route}) => {
                     <TextInput
                         style={styles.InputField}
                         value={email}
+                        onChangeText={setEmail}
+                        editable={false}
                     />
                 </View>
                 <View>
@@ -128,26 +144,27 @@ const ProfileScreen = ({navigation, route}) => {
                     <TextInput
                         style={styles.InputField}
                         value={phoneNumber}
+                        onChangeText={setPhoneNumber}
                     />
                 </View>
                 <Text style={{color:"black", fontSize: 18, fontFamily: "Karla", fontWeight: "bold", marginVertical: 18}}>Email notification</Text>
                 <View style={{flexDirection: "row", alignItems: "center", marginVertical: 5}}>
-                    <BouncyCheckbox fillColor="#495E57" size={22} isChecked={orderNoti}/>
+                    <BouncyCheckbox fillColor="#495E57" size={22} isChecked={orderNoti} onPress={(isChecked) => setOrderNoti(isChecked)}/>
                     <Text style={{color: "#333333", fontFamily: "Karla"}}>Order statuses</Text>
                 </View>
 
                 <View style={{flexDirection: "row", alignItems: "center", marginVertical: 5}}>
-                    <BouncyCheckbox fillColor="#495E57" size={22} isChecked={passwordNoti}/>
+                    <BouncyCheckbox fillColor="#495E57" size={22} isChecked={passwordNoti} onPress={(isChecked) => setPasswordNoti(isChecked)}/>
                     <Text style={{color: "#333333", fontFamily: "Karla"}}>Password changes</Text>
                 </View>
 
                 <View style={{flexDirection: "row", alignItems: "center", marginVertical: 5}}>
-                    <BouncyCheckbox fillColor="#495E57" size={22} isChecked={specialNoti}/>
+                    <BouncyCheckbox fillColor="#495E57" size={22} isChecked={specialNoti} onPress={(isChecked) => setSpecialNoti(isChecked)}/>
                     <Text style={{color: "#333333", fontFamily: "Karla"}}>Special offers</Text>
                 </View>
 
                 <View style={{flexDirection: "row", alignItems: "center", marginVertical: 5}}>
-                    <BouncyCheckbox fillColor="#495E57" size={22} isChecked={newsNoti}/>
+                    <BouncyCheckbox fillColor="#495E57" size={22} isChecked={newsNoti} onPress={(isChecked) => setNewsNoti(isChecked)}/>
                     <Text style={{color: "#333333", fontFamily: "Karla"}}>Newsletter</Text>
                 </View>
                 <Pressable
@@ -186,7 +203,9 @@ const ProfileScreen = ({navigation, route}) => {
                             color: "gray"
                         }}>Discard changes</Text>
                     </Pressable>
-                    <Pressable>
+                    <Pressable
+                        onPress={handleSaveChanges}
+                    >
                         <Text style={{
                             width: 130,
                             paddingVertical: 10,

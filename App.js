@@ -38,7 +38,7 @@ const App = () => {
   },[isOnBoard])
 
   
-  if (isLoading && !fontsLoaded){
+  if (isLoading || !fontsLoaded){
     return(
       <View>
         <Text>Loading</Text>

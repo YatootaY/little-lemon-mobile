@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
-import { View, Text, Image, StyleSheet } from "react-native"
+import { View, Text, Image, StyleSheet, ScrollView } from "react-native"
 import { Searchbar } from "react-native-paper"
 import Filters from "../components/Filters"
+import FoodInfo from "../components/FoodInfo"
 
 const sections = ["Starters", "Mains", "Desserts", "Drinks"]
 
@@ -18,7 +19,7 @@ const MainScreen = ({navigation}) => {
     }
 
     return(
-        <View>
+        <View style={{flex:1, paddingBottom: 10}}>
             <View style={Style.heroContainer}>
                 <View style={{marginVertical: 30,flexDirection: "row", justifyContent:"space-between", alignItems: "flex-end"}}>
                     <View style={{width: "60%"}}>
@@ -32,7 +33,7 @@ const MainScreen = ({navigation}) => {
                 </View>
                 <Searchbar style={{borderRadius: 5}}/>
             </View>
-            <View style={{padding: 30}}>
+            <View style={{padding: 30, paddingBottom: 18}}>
                 <Text style={{fontSize:18, fontWeight: "bold"}}>ORDER FOR DELIVERY!</Text>
                 <Filters
                     selections={filterSelections}
@@ -40,6 +41,11 @@ const MainScreen = ({navigation}) => {
                     sections={sections}
                 />
             </View>
+            <ScrollView showsVerticalScrollIndicator={false} style={{borderTopWidth: 1, marginHorizontal: 30, borderColor: "#333333"}}>
+                <FoodInfo/>
+                <FoodInfo/>
+                <FoodInfo/>
+            </ScrollView>
         </View>
     )
 }

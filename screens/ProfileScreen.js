@@ -137,6 +137,7 @@ const ProfileScreen = ({navigation, route}) => {
                         value={email}
                         onChangeText={setEmail}
                         editable={false}
+                        keyboardType="email-address"
                     />
                 </View>
                 <View>
@@ -145,6 +146,8 @@ const ProfileScreen = ({navigation, route}) => {
                         style={styles.InputField}
                         value={phoneNumber}
                         onChangeText={setPhoneNumber}
+                        keyboardType="phone-pad"
+                        placeholder="+95"
                     />
                 </View>
                 <Text style={{color:"black", fontSize: 18, fontFamily: "Karla", fontWeight: "bold", marginVertical: 18}}>Email notification</Text>

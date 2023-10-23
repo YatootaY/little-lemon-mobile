@@ -1,18 +1,20 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback, useMemo } from "react"
 import { View, Text, Image, StyleSheet, ScrollView, Alert, SectionList } from "react-native"
 import { Searchbar } from "react-native-paper"
 import Filters from "../components/Filters"
 import FoodInfo from "../components/FoodInfo"
 import { createTable, filterByQueryAndCategories, getMenuItems, saveMenuItems } from "../database"
 import { getSectionListData, useUpdateEffect } from "../utils"
+import debounce from 'lodash.debounce';
 
-const sections = ["Starters", "Mains", "Desserts", "Drinks"]
+const sections = ["starters", "mains", "desserts", "drinks"]
 const API_URL = "https://raw.githubusercontent.com/Meta-Mobile-Developer-PC/Working-With-Data-API/main/capstone.json"
 
 const MainScreen = ({navigation}) => {
 
     const [data, setData] = useState([]);
-    const [query, setQuery] = useState("");
+    const [searchBarText, setSearchBarText] = useState('');
+    const [query, setQuery] = useState(" ");
     const [filterSelections, setFilterSelections] = useState(
         sections.map(()=> false)
     )
@@ -22,6 +24,16 @@ const MainScreen = ({navigation}) => {
         arrayCopy[index] = !filterSelections[index];
         setFilterSelections(arrayCopy)
     }
+    const lookup = useCallback((q) => {
+        setQuery(q);
+      }, []);
+    
+    const debouncedLookup = useMemo(() => debounce(lookup, 500), [lookup]);
+
+    const handleSearchChange = (text) => {
+        setSearchBarText(text);
+        debouncedLookup(text);
+    };
 
     const fetchData = async () => {
         let data = []
@@ -86,7 +98,13 @@ const MainScreen = ({navigation}) => {
                         <Image style={Style.heroImage} source={require("../assets/HeroImage.png")}/>
                     </View>
                 </View>
-                <Searchbar style={{borderRadius: 5}}/>
+                <Searchbar 
+                    style={{borderRadius: 5}}
+                    placeholder="Search"
+                    placeholderTextColor="gray"
+                    onChangeText={handleSearchChange}
+                    value={searchBarText}
+                />
             </View>
             <View style={{padding: 30, paddingBottom: 18}}>
                 <Text style={{fontSize:18, fontWeight: "bold"}}>ORDER FOR DELIVERY!</Text>

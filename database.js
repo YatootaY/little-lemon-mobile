@@ -57,10 +57,10 @@ export async function filterByQueryAndCategories(query, activeCategories) {
           [...activeCategories],
           (_, { rows }) => {
             rows._array.forEach((ele) => {
-              if (ele.title.toLowerCase().includes(query.toLowerCase())) {
-                result.push(ele);
-              }
-            });
+                if (ele.name.toLowerCase().includes(query.toLowerCase())) {
+                  result.push(ele);
+                }
+              });
             resolve(result);
           }
         );

@@ -11,12 +11,12 @@ const Header = () => {
 
 const HeaderStyle = StyleSheet.create({
     container: {
-        display: "flex",
         flexDirection: "row",
         alignItems:"center",
         justifyContent: "center",
         position: "relative",
-        padding: 30
+        padding: 30,
+        backgroundColor: "red"
     },
     profilePic: {
         width: 40,

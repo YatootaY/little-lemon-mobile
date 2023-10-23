@@ -1,15 +1,32 @@
+import { useEffect, useState } from "react"
 import { View, StyleSheet, Text, TextInput, Pressable } from "react-native"
-import Header from "../components/Header"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const OnBoarding = () => {
+const OnBoardingScreen = ({navigation, route}) => {
+
+    const {setIsOnBoard} = route.params
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
 
     const onNextHandle = () => {
-        console.log("Clicked Next")
+        console.log(setIsOnBoard)
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+        if (reg.test(email) && name){
+            (async() => {
+                try{
+                    await AsyncStorage.setItem("email", email)
+                    await AsyncStorage.setItem("name",name)
+                    setIsOnBoard(true)
+                    navigation.navigate("Onboarding")
+                } catch( error){
+                    console.log(error)
+                }
+            })();
+        }
     }
-    
+
     return(
         <View style={OnBoardingStyle.container}>
-            <Header/>
             <View style={OnBoardingStyle.InputArea}>
                 <View>
                     <Text style={{color: "#EDEFEE", fontSize: 14, fontFamily: "Karla"}}>Welcome from</Text>
@@ -21,12 +38,16 @@ const OnBoarding = () => {
                         <Text style={OnBoardingStyle.InputLabel}>First Name</Text>
                         <TextInput
                             style={OnBoardingStyle.InputField}
+                            onChangeText={setName}
+                            value={name}
                         />
                     </View>
                     <View>
                         <Text style={OnBoardingStyle.InputLabel}>Email</Text>
                         <TextInput
                             style={OnBoardingStyle.InputField}
+                            onChangeText={setEmail}
+                            value={email}
                         />
                     </View>
                 </View>
@@ -80,4 +101,4 @@ const OnBoardingStyle = StyleSheet.create({
 
 })
 
-export default OnBoarding
+export default OnBoardingScreen

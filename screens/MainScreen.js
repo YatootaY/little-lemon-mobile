@@ -1,8 +1,21 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { View, Text, Image, StyleSheet } from "react-native"
 import { Searchbar } from "react-native-paper"
+import Filters from "../components/Filters"
+
+const sections = ["Starters", "Mains", "Desserts", "Drinks"]
 
 const MainScreen = ({navigation}) => {
+
+    const [filterSelections, setFilterSelections] = useState(
+        sections.map(()=> false)
+    )
+
+    const handleFiltersChange = async (index) => {
+        const arrayCopy = [...filterSelections]
+        arrayCopy[index] = !filterSelections[index];
+        setFilterSelections(arrayCopy)
+    }
 
     return(
         <View>
@@ -18,6 +31,14 @@ const MainScreen = ({navigation}) => {
                     </View>
                 </View>
                 <Searchbar style={{borderRadius: 5}}/>
+            </View>
+            <View style={{padding: 30}}>
+                <Text style={{fontSize:18, fontWeight: "bold"}}>ORDER FOR DELIVERY!</Text>
+                <Filters
+                    selections={filterSelections}
+                    onChange={handleFiltersChange}
+                    sections={sections}
+                />
             </View>
         </View>
     )
